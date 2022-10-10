@@ -1,0 +1,22 @@
+name: fakepdb
+
+on:
+  pull_request:
+  push:
+  release:
+    types: published
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+    - name: install ninja build tool
+      uses: seanmiddleditch/gha-setup-ninja@master
+    - uses: actions/checkout@v2
+    - name: add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'true'
+    - name: run build
+      run: |
+        .\build.ps1
